@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.4.3</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.developer</groupId>
+  <artifactId>quantscope</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>quantscope</name>
+  <description>quantscope</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <!-- Your specified Spring Cloud version line -->
+    <spring-cloud.version>2024.0.1</spring-cloud.version>
+    <jjwt.version>0.11.5</jjwt.version>
+    <mybatis-plus.version>3.5.7</mybatis-plus.version>
+    <hutool.version>5.8.40</hutool.version>
+    <dubbo.version>3.2.8</dubbo.version>
+    <commons-lang3.version>3.12.0</commons-lang3.version>
+  </properties>
+
+  <!-- Use BOM to unified manage Spring Cloud related dependency versions to avoid conflicts -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+
+    <!-- ✅ WebFlux (do not use spring-boot-starter-web again, otherwise it will trigger MVC on classpath) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+
+    <!-- ✅ Spring Cloud Gateway (WebFlux version) -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-gateway</artifactId>
+    </dependency>
+
+    <!-- MyBatis-Plus (your original dependency, keep) -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+      <version>${mybatis-plus.version}</version>
+    </dependency>
+
+    <!-- MySQL -->
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Security crypto -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-crypto</artifactId>
+    </dependency>
+
+    <!-- JWT -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-api</artifactId>
+      <version>${jjwt.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-jackson</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Hutool -->
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>${hutool.version}</version>
+    </dependency>
+
+    <!-- Dubbo (keep) -->
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo</artifactId>
+      <version>${dubbo.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba.nacos</groupId>
+      <artifactId>nacos-client</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+
+    <!-- Your common module -->
+    <dependency>
+      <groupId>com.developer</groupId>
+      <artifactId>quantscope-commen</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- ❗ It is not recommended to "re-depend on a gateway module service" in the same service
+         If quantscope-gateway is an independent gateway service, please do not depend on it here;
+         If it is just a jar component, then it must not introduce spring-boot-starter-web.
+         It is commented out here to avoid indirectly introducing MVC which caused your current error.
+    -->
+    <!-- commons-lang3 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+
+    <!-- Lombok (only one copy) -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

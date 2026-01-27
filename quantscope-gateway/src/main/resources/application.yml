@@ -1,0 +1,37 @@
+server:
+  port: 8090
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, quantscope
+      routes:
+        - id: api_route
+          uri: http://localhost:8123
+          predicates:
+            - Path=/api/**
+
+quantscope:
+  gateway:
+    noAuthPaths:
+      - /api/user/register
+      - /api/user/login
+      - /api/user/getApiKey
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+#    address: nacos://192.168.174.128:8848
+
