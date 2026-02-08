@@ -186,9 +186,7 @@ user_role → role_permission → permission
 ## 📊 规划功能（Roadmap）
 
 * 🔹 市场画像指标服务
-* 🔹 情绪因子分析服务
-* 🔹 Redis 分布式限流
-* 🔹 Kafka 实时金融数据流
+* 🔹 情绪因子分析 RAG 服务
 * 🔹 LLM 市场情绪分析集成
 * 🔹 Elasticsearch 指标搜索能力
 * 🔹 计费与套餐管理系统
