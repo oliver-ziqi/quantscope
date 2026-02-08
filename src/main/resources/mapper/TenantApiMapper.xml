@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.developer.quantscope.mapper.TenantApiMapper">
+
+    <resultMap id="BaseResultMap" type="com.developer.quantscopecommen.entity.TenantApi">
+      <result property="tenantId" column="tenantId" jdbcType="BIGINT"/>
+      <result property="apiId" column="apiId" jdbcType="BIGINT"/>
+      <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tenantId,apiId,enabled
+    </sql>
+</mapper>

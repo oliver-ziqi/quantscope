@@ -6,6 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.developer.quantscopecommen.entity.User">
       <id property="id" column="id" jdbcType="BIGINT"/>
+      <result property="tenantId" column="tenantId" jdbcType="BIGINT"/>
       <result property="userName" column="userName" jdbcType="VARCHAR"/>
       <result property="userAccount" column="userAccount" jdbcType="VARCHAR"/>
       <result property="userAvatar" column="userAvatar" jdbcType="VARCHAR"/>
@@ -20,7 +21,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userName,userAccount,userAvatar,gender,userRole,
+        id,tenantId,userName,userAccount,userAvatar,gender,userRole,
         userPassword,accessKey,secretKey,createTime,updateTime,
         isDelete
     </sql>

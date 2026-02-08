@@ -25,6 +25,11 @@ public class User implements Serializable {
     private Long id;
 
     /**
+     * Tenant ID
+     */
+    private Long tenantId;
+
+    /**
      * User nickname
      */
     private String userName;

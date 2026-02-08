@@ -10,11 +10,12 @@ use quantscope;
 create table if not exists user
 (
     id           bigint auto_increment comment 'ID' primary key,
+    tenantId     bigint                                null comment 'Tenant ID',
     userName     varchar(256)                           null comment 'User nickname',
     userAccount  varchar(256)                           not null comment 'Account',
     userAvatar   varchar(1024)                          null comment 'User avatar',
     gender       tinyint                                null comment 'Gender',
-    userRole     varchar(256) default 'user'            not null comment 'User role: user / admin',
+    userRole     varchar(256) default 'user'            not null comment 'User role: user / admin (legacy)',
     userPassword varchar(512)                           not null comment 'Password',
     `accessKey` varchar(512) default '' not null comment 'accessKey',
     `secretKey` varchar(512) default '' not null comment 'secretKey',
@@ -24,6 +25,48 @@ create table if not exists user
     constraint uni_userAccount
         unique (userAccount)
 ) comment 'User';
+
+-- Tenant table
+create table if not exists tenant
+(
+    id          bigint auto_increment comment 'ID' primary key,
+    name        varchar(128)                          not null comment 'Tenant name',
+    status      tinyint      default 1                not null comment '1-enabled, 0-disabled',
+    createTime  datetime     default CURRENT_TIMESTAMP not null comment 'Creation time',
+    updateTime  datetime     default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment 'Update time'
+) comment 'Tenant';
+
+-- Role table
+create table if not exists role
+(
+    id          bigint auto_increment comment 'ID' primary key,
+    tenantId    bigint                                not null comment 'Tenant ID',
+    name        varchar(64)                           not null comment 'Role name',
+    code        varchar(64)                           not null comment 'Role code'
+) comment 'Role';
+
+-- Permission table
+create table if not exists permission
+(
+    id          bigint auto_increment comment 'ID' primary key,
+    code        varchar(128)                          not null comment 'Permission code',
+    `desc`      varchar(256)                          null comment 'Description'
+) comment 'Permission';
+
+-- User-Role relationship table
+create table if not exists user_role
+(
+    userId      bigint                                not null comment 'User ID',
+    roleId      bigint                                not null comment 'Role ID',
+    tenantId    bigint                                not null comment 'Tenant ID'
+) comment 'User-Role relationship';
+
+-- Role-Permission relationship table
+create table if not exists role_permission
+(
+    roleId      bigint                                not null comment 'Role ID',
+    permissionId bigint                               not null comment 'Permission ID'
+) comment 'Role-Permission relationship';
 
 -- Interface information table
 create table if not exists quantscope.`interface_info`
@@ -43,6 +86,54 @@ create table if not exists quantscope.`interface_info`
     `isDelete` tinyint default 0 not null comment 'Is deleted (0-not deleted, 1-deleted)'
 ) comment 'Interface information';
 
+-- API service catalog
+create table if not exists api_service
+(
+    id          bigint auto_increment comment 'ID' primary key,
+    name        varchar(128)                          not null comment 'API name',
+    code        varchar(64)                           not null comment 'API code',
+    status      tinyint      default 1                not null comment '1-open, 0-closed'
+) comment 'API service';
+
+-- Tenant API enablement
+create table if not exists tenant_api
+(
+    tenantId    bigint                                not null comment 'Tenant ID',
+    apiId       bigint                                not null comment 'API ID',
+    enabled     tinyint      default 1                not null comment '1-enabled, 0-disabled'
+) comment 'Tenant API';
+
+-- User API allocation
+create table if not exists user_api
+(
+    userId      bigint                                not null comment 'User ID',
+    apiId       bigint                                not null comment 'API ID'
+) comment 'User API';
+
+-- Strategy resource table
+create table if not exists strategy
+(
+    id          bigint auto_increment comment 'ID' primary key,
+    tenantId    bigint                                not null comment 'Tenant ID',
+    name        varchar(128)                          not null comment 'Strategy name',
+    status      tinyint      default 1                not null comment '1-online, 0-offline'
+) comment 'Strategy';
+
+-- Tenant Strategy enablement
+create table if not exists tenant_strategy
+(
+    tenantId    bigint                                not null comment 'Tenant ID',
+    strategyId  bigint                                not null comment 'Strategy ID',
+    enabled     tinyint      default 1                not null comment '1-enabled, 0-disabled'
+) comment 'Tenant Strategy';
+
+-- User Strategy allocation
+create table if not exists user_strategy
+(
+    userId      bigint                                not null comment 'User ID',
+    strategyId  bigint                                not null comment 'Strategy ID'
+) comment 'User Strategy';
+
 -- User interface invocation relationship table
 create table if not exists quantscope.`user_interface_info`
 (
@@ -56,3 +147,69 @@ create table if not exists quantscope.`user_interface_info`
     `updateTime` datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment 'Update time',
     `isDelete` tinyint default 0 not null comment 'Is deleted (0-not deleted, 1-deleted)'
 ) comment 'User interface invocation relationship';
+
+-- Seed data (basic mock data)
+insert into tenant (id, name, status) values
+    (1, 'QuantScope Main Tenant', 1);
+
+insert into user (id, tenantId, userName, userAccount, userRole, userPassword, accessKey, secretKey)
+values
+    (1, 1, 'Owner', 'owner@quantscope', 'admin', 'hashed_pw_owner', 'AK_OWNER', 'SK_OWNER'),
+    (2, 1, 'Trader', 'trader@quantscope', 'user', 'hashed_pw_trader', 'AK_TRADER', 'SK_TRADER'),
+    (3, 1, 'Analyst', 'analyst@quantscope', 'user', 'hashed_pw_analyst', 'AK_ANALYST', 'SK_ANALYST');
+
+insert into role (id, tenantId, name, code) values
+    (1, 1, 'Tenant Owner', 'owner'),
+    (2, 1, 'Trader', 'trader'),
+    (3, 1, 'Analyst', 'analyst');
+
+insert into permission (id, code, `desc`) values
+    (1, 'console:strategy:manage', 'Manage strategies'),
+    (2, 'console:api:manage', 'Manage APIs'),
+    (3, 'api:data:indicator:read', 'Read indicator data'),
+    (4, 'api:data:sentiment:read', 'Read daily sentiment logs'),
+    (5, 'trade:submit', 'Submit trades');
+
+insert into user_role (userId, roleId, tenantId) values
+    (1, 1, 1),
+    (2, 2, 1),
+    (3, 3, 1);
+
+insert into role_permission (roleId, permissionId) values
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (2, 5),
+    (3, 3),
+    (3, 4);
+
+insert into api_service (id, name, code, status) values
+    (1, 'Indicator Data API', 'indicator_data', 1),
+    (2, 'LLM Daily Sentiment Log API', 'sentiment_daily_log', 1);
+
+insert into tenant_api (tenantId, apiId, enabled) values
+    (1, 1, 1),
+    (1, 2, 1);
+
+insert into user_api (userId, apiId) values
+    (1, 1),
+    (1, 2),
+    (2, 1),
+    (3, 1),
+    (3, 2);
+
+insert into strategy (id, tenantId, name, status) values
+    (1, 1, 'Mean Reversion', 1),
+    (2, 1, 'Momentum', 1),
+    (3, 1, 'Pairs Trading', 0);
+
+insert into tenant_strategy (tenantId, strategyId, enabled) values
+    (1, 1, 1),
+    (1, 2, 1),
+    (1, 3, 0);
+
+insert into user_strategy (userId, strategyId) values
+    (1, 1),
+    (1, 2),
+    (2, 1),
+    (3, 2);

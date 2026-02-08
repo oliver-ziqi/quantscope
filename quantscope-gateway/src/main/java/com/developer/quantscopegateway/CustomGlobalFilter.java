@@ -7,6 +7,7 @@ import com.developer.quantscopecommen.service.InnerUserInterfaceInfoService;
 import com.developer.quantscopecommen.service.InnerUserService;
 import com.developer.quantscopecommen.util.SignUtils;
 import com.developer.quantscopegateway.config.NoAuthPaths;
+import com.developer.quantscopegateway.config.RateLimitProperties;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,10 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.reactivestreams.Publisher;
+import org.redisson.api.RRateLimiter;
+import org.redisson.api.RateIntervalUnit;
+import org.redisson.api.RateType;
+import org.redisson.api.RedissonClient;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -53,8 +58,15 @@ public class CustomGlobalFilter implements GlobalFilter {
 
     private NoAuthPaths noAuthPaths;
 
-    public CustomGlobalFilter(NoAuthPaths noAuthPaths) {
+    private final RedissonClient redissonClient;
+    private final RateLimitProperties rateLimitProperties;
+
+    public CustomGlobalFilter(NoAuthPaths noAuthPaths,
+                              RedissonClient redissonClient,
+                              RateLimitProperties rateLimitProperties) {
         this.noAuthPaths = noAuthPaths;
+        this.redissonClient = redissonClient;
+        this.rateLimitProperties = rateLimitProperties;
     }
 
     @Override
@@ -103,6 +115,15 @@ public class CustomGlobalFilter implements GlobalFilter {
 
         if (interfaceInfo == null) {
             return handleNoAuth(response);
+        }
+
+        //6. rate limit by apiKeyId + apiId
+        if (rateLimitProperties.isEnabled()) {
+            boolean allowed = acquireRateLimit(invokeUser.getId(), interfaceInfo.getId());
+            if (!allowed) {
+                response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
+                return response.setComplete();
+            }
         }
 
         //5. continue other filter
@@ -169,5 +190,17 @@ public class CustomGlobalFilter implements GlobalFilter {
     public Mono<Void> handleNoAuth(ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.FORBIDDEN);
         return response.setComplete();
+    }
+
+    private boolean acquireRateLimit(Long apiKeyId, Long apiId) {
+        String key = rateLimitProperties.getKeyPrefix() + ":" + apiKeyId + ":" + apiId;
+        RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
+        rateLimiter.trySetRate(
+            RateType.OVERALL,  // all clients use one limiter
+            rateLimitProperties.getPermits(), // how many requests in one interval
+            rateLimitProperties.getIntervalSeconds(), // how long one term
+            RateIntervalUnit.SECONDS //units
+        );
+        return rateLimiter.tryAcquire(1);
     }
 }

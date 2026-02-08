@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.developer.quantscope.mapper.PermissionMapper">
+
+    <resultMap id="BaseResultMap" type="com.developer.quantscopecommen.entity.Permission">
+      <id property="id" column="id" jdbcType="BIGINT"/>
+      <result property="code" column="code" jdbcType="VARCHAR"/>
+      <result property="desc" column="desc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,`desc`
+    </sql>
+
+    <select id="selectPermissionsByUserId" resultMap="BaseResultMap">
+        select distinct p.id, p.code, p.`desc`
+        from permission p
+        inner join role_permission rp on rp.permissionId = p.id
+        inner join user_role ur on ur.roleId = rp.roleId
+        where ur.userId = #{userId}
+    </select>
+
+    <select id="selectPermissionsByUserIdAndTenantId" resultMap="BaseResultMap">
+        select distinct p.id, p.code, p.`desc`
+        from permission p
+        inner join role_permission rp on rp.permissionId = p.id
+        inner join user_role ur on ur.roleId = rp.roleId
+        where ur.userId = #{userId}
+          and ur.tenantId = #{tenantId}
+    </select>
+</mapper>

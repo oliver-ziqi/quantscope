@@ -17,6 +17,14 @@ quantscope:
       - /api/user/register
       - /api/user/login
       - /api/user/getApiKey
+    rate-limit:
+      enabled: true
+      permits: 10
+      interval-seconds: 1
+      key-prefix: rl:ak:api
+
+redisson:
+  address: redis://localhost:6379
 
 logging:
   level:
@@ -34,4 +42,3 @@ dubbo:
   registry:
     id: nacos-registry
 #    address: nacos://192.168.174.128:8848
-
