@@ -1,0 +1,11 @@
+### RAG Report Test
+POST http://localhost:8080/openapi/rag/report
+X-Tenant-Id: 1
+X-User-Id: 1
+Content-Type: application/json
+
+{
+  "prompt": "test",
+  "date": "2026-02-10",
+  "format": "JSON"
+}

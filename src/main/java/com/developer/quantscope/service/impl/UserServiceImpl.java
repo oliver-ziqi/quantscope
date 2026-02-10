@@ -9,7 +9,7 @@ import com.developer.quantscope.model.network.ResultUtils;
 import com.developer.quantscope.model.vo.ApiKeyResponse;
 import com.developer.quantscope.service.UserService;
 import com.developer.quantscope.util.JwtService;
-import com.developer.quantscopecommen.entity.User;
+import com.developer.quantscopecommon.entity.User;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

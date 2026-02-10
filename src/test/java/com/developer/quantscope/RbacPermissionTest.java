@@ -1,7 +1,7 @@
 package com.developer.quantscope;
 
 import com.developer.quantscope.mapper.PermissionMapper;
-import com.developer.quantscopecommen.entity.Permission;
+import com.developer.quantscopecommon.entity.Permission;
 import jakarta.annotation.Resource;
 import java.util.List;
 import org.junit.jupiter.api.Test;

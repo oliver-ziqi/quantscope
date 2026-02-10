@@ -213,3 +213,40 @@ insert into user_strategy (userId, strategyId) values
     (1, 2),
     (2, 1),
     (3, 2);
+
+-- RAG job task table
+create table if not exists rag_job_task
+(
+    id              bigint auto_increment comment 'ID' primary key,
+    job_id          varchar(64)                           not null comment 'Job ID',
+    tenant_id       bigint                               not null comment 'Tenant ID',
+    user_id         bigint                               not null comment 'User ID',
+    status          varchar(16)                           not null comment 'Status: CREATED/QUEUED/RUNNING/READY/FAILED',
+    request_payload text                                 null comment 'Request payload',
+    result_json     mediumtext                           null comment 'Result json',
+    result_pdf_url  varchar(512)                         null comment 'Result pdf url',
+    error_msg       varchar(1024)                        null comment 'Error message',
+    created_at      datetime     default CURRENT_TIMESTAMP not null comment 'Creation time',
+    updated_at      datetime     default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment 'Update time',
+    unique key uni_rag_job_id (job_id)
+) comment 'RAG job task';
+
+-- RAG job event table
+create table if not exists rag_job_event
+(
+    id         bigint auto_increment comment 'ID' primary key,
+    job_id     varchar(64)                           not null comment 'Job ID',
+    event_type varchar(32)                           not null comment 'Event type',
+    payload    text                                 null comment 'Event payload',
+    created_at datetime     default CURRENT_TIMESTAMP not null comment 'Creation time'
+) comment 'RAG job event';
+
+-- RAG job result table
+create table if not exists rag_job_result
+(
+    id          bigint auto_increment comment 'ID' primary key,
+    job_id      varchar(64)                           not null comment 'Job ID',
+    result_type varchar(16)                           not null comment 'Result type',
+    result_ref  varchar(512)                          not null comment 'Result reference',
+    created_at  datetime     default CURRENT_TIMESTAMP not null comment 'Creation time'
+) comment 'RAG job result';

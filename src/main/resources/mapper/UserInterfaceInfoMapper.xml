@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.developer.quantscope.mapper.UserInterfaceInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.developer.quantscopecommen.entity.UserInterfaceInfo">
+    <resultMap id="BaseResultMap" type="com.developer.quantscopecommon.entity.UserInterfaceInfo">
       <id property="id" column="id" jdbcType="BIGINT"/>
       <result property="userId" column="userId" jdbcType="BIGINT"/>
       <result property="interfaceInfoId" column="interfaceInfoId" jdbcType="BIGINT"/>

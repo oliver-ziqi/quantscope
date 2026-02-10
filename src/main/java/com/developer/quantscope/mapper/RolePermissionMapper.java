@@ -1,7 +1,7 @@
 package com.developer.quantscope.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.developer.quantscopecommen.entity.RolePermission;
+import com.developer.quantscopecommon.entity.RolePermission;
 
 /**
  * Database operation Mapper for table role_permission

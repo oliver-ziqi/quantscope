@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.developer.quantscoperagservice.mapper.RagJobTaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.developer.quantscopecommon.entity.RagJobTask">
+      <id property="id" column="id" jdbcType="BIGINT"/>
+      <result property="jobId" column="job_id" jdbcType="VARCHAR"/>
+      <result property="tenantId" column="tenant_id" jdbcType="BIGINT"/>
+      <result property="userId" column="user_id" jdbcType="BIGINT"/>
+      <result property="status" column="status" jdbcType="VARCHAR"/>
+      <result property="requestPayload" column="request_payload" jdbcType="LONGVARCHAR"/>
+      <result property="resultJson" column="result_json" jdbcType="LONGVARCHAR"/>
+      <result property="resultPdfUrl" column="result_pdf_url" jdbcType="VARCHAR"/>
+      <result property="errorMsg" column="error_msg" jdbcType="VARCHAR"/>
+      <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+      <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,job_id,tenant_id,user_id,status,request_payload,
+        result_json,result_pdf_url,error_msg,created_at,updated_at
+    </sql>
+</mapper>

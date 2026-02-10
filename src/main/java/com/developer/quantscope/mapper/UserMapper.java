@@ -1,7 +1,7 @@
 package com.developer.quantscope.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.developer.quantscopecommen.entity.User;
+import com.developer.quantscopecommon.entity.User;
 
 /**
 * @author ziqi

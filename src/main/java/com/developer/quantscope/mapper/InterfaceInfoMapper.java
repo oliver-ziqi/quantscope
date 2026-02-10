@@ -2,7 +2,7 @@ package com.developer.quantscope.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.developer.quantscopecommen.entity.InterfaceInfo;
+import com.developer.quantscopecommon.entity.InterfaceInfo;
 
 /**
 * @author ziqi

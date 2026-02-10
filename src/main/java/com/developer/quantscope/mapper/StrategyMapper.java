@@ -1,7 +1,7 @@
 package com.developer.quantscope.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.developer.quantscopecommen.entity.Strategy;
+import com.developer.quantscopecommon.entity.Strategy;
 
 /**
  * Database operation Mapper for table strategy

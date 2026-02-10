@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.developer.quantscoperagservice.mapper.RagJobResultMapper">
+
+    <resultMap id="BaseResultMap" type="com.developer.quantscopecommon.entity.RagJobResult">
+      <id property="id" column="id" jdbcType="BIGINT"/>
+      <result property="jobId" column="job_id" jdbcType="VARCHAR"/>
+      <result property="resultType" column="result_type" jdbcType="VARCHAR"/>
+      <result property="resultRef" column="result_ref" jdbcType="VARCHAR"/>
+      <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,job_id,result_type,result_ref,created_at
+    </sql>
+</mapper>

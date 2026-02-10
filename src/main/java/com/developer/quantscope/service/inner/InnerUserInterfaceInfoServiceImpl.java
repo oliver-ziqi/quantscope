@@ -2,7 +2,7 @@ package com.developer.quantscope.service.inner;
 
 
 import com.developer.quantscope.service.UserInterfaceInfoService;
-import com.developer.quantscopecommen.service.InnerUserInterfaceInfoService;
+import com.developer.quantscopecommon.service.InnerUserInterfaceInfoService;
 import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboService;
 

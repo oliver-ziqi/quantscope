@@ -1,11 +1,11 @@
 package com.developer.quantscopegateway;
 
-import com.developer.quantscopecommen.entity.InterfaceInfo;
-import com.developer.quantscopecommen.entity.User;
-import com.developer.quantscopecommen.service.InnerInterfaceInfoService;
-import com.developer.quantscopecommen.service.InnerUserInterfaceInfoService;
-import com.developer.quantscopecommen.service.InnerUserService;
-import com.developer.quantscopecommen.util.SignUtils;
+import com.developer.quantscopecommon.entity.InterfaceInfo;
+import com.developer.quantscopecommon.entity.User;
+import com.developer.quantscopecommon.service.InnerInterfaceInfoService;
+import com.developer.quantscopecommon.service.InnerUserInterfaceInfoService;
+import com.developer.quantscopecommon.service.InnerUserService;
+import com.developer.quantscopecommon.util.SignUtils;
 import com.developer.quantscopegateway.config.NoAuthPaths;
 import com.developer.quantscopegateway.config.RateLimitProperties;
 import java.nio.charset.StandardCharsets;

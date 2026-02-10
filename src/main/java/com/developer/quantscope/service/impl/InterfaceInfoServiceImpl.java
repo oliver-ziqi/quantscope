@@ -3,7 +3,7 @@ package com.developer.quantscope.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.developer.quantscope.service.InterfaceInfoService;
 import com.developer.quantscope.mapper.InterfaceInfoMapper;
-import com.developer.quantscopecommen.entity.InterfaceInfo;
+import com.developer.quantscopecommon.entity.InterfaceInfo;
 import org.springframework.stereotype.Service;
 
 /**

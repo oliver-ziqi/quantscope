@@ -2,7 +2,7 @@ package com.developer.quantscope;
 
 import com.developer.quantscope.model.network.BaseResponse;
 import com.developer.quantscope.model.vo.ApiKeyResponse;
-import com.developer.quantscopecommen.util.SignUtils;
+import com.developer.quantscopecommon.util.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;

@@ -1,8 +1,8 @@
 package com.developer.quantscope.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.developer.quantscopecommen.entity.InterfaceInfo;
-import com.developer.quantscopecommen.entity.UserInterfaceInfo;
+import com.developer.quantscopecommon.entity.InterfaceInfo;
+import com.developer.quantscopecommon.entity.UserInterfaceInfo;
 import java.util.List;
 
 /**

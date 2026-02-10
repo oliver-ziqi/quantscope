@@ -2,7 +2,7 @@ package com.developer.quantscope.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.developer.quantscopecommen.entity.InterfaceInfo;
+import com.developer.quantscopecommon.entity.InterfaceInfo;
 
 /**
 * @author ziqi

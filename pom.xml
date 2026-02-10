@@ -15,11 +15,17 @@
   <artifactId>quantscope</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>quantscope</name>
+  <packaging>pom</packaging>
   <description>quantscope</description>
+
+  <modules>
+    <module>quantscope-gateway</module>
+    <module>quantscope-rag-service</module>
+    <module>quantscope-common</module>
+  </modules>
 
   <properties>
     <java.version>17</java.version>
-    <!-- Your specified Spring Cloud version line -->
     <spring-cloud.version>2024.0.1</spring-cloud.version>
     <jjwt.version>0.11.5</jjwt.version>
     <mybatis-plus.version>3.5.7</mybatis-plus.version>
@@ -43,19 +49,6 @@
 
   <dependencies>
 
-    <!-- ✅ WebFlux (do not use spring-boot-starter-web again, otherwise it will trigger MVC on classpath) -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
-    </dependency>
-
-    <!-- ✅ Spring Cloud Gateway (WebFlux version) -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-gateway</artifactId>
-    </dependency>
-
-    <!-- MyBatis-Plus (your original dependency, keep) -->
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
@@ -122,15 +115,10 @@
     <!-- Your common module -->
     <dependency>
       <groupId>com.developer</groupId>
-      <artifactId>quantscope-commen</artifactId>
+      <artifactId>quantscope-common</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
-    <!-- ❗ It is not recommended to "re-depend on a gateway module service" in the same service
-         If quantscope-gateway is an independent gateway service, please do not depend on it here;
-         If it is just a jar component, then it must not introduce spring-boot-starter-web.
-         It is commented out here to avoid indirectly introducing MVC which caused your current error.
-    -->
     <!-- commons-lang3 -->
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -151,12 +139,20 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-bom</artifactId>
+      <version>${dubbo.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
   </dependencies>
 
   <build>

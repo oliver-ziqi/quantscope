@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.developer.quantscope.mapper.StrategyMapper">
 
-    <resultMap id="BaseResultMap" type="com.developer.quantscopecommen.entity.Strategy">
+    <resultMap id="BaseResultMap" type="com.developer.quantscopecommon.entity.Strategy">
       <id property="id" column="id" jdbcType="BIGINT"/>
       <result property="tenantId" column="tenantId" jdbcType="BIGINT"/>
       <result property="name" column="name" jdbcType="VARCHAR"/>

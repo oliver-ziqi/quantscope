@@ -1,7 +1,7 @@
 package com.developer.quantscope.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.developer.quantscopecommen.entity.Permission;
+import com.developer.quantscopecommon.entity.Permission;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

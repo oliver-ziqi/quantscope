@@ -3,7 +3,7 @@ package com.developer.quantscope.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.developer.quantscope.model.network.BaseResponse;
 import com.developer.quantscope.model.vo.ApiKeyResponse;
-import com.developer.quantscopecommen.entity.User;
+import com.developer.quantscopecommon.entity.User;
 import org.springframework.web.server.ServerWebExchange;
 
 /**

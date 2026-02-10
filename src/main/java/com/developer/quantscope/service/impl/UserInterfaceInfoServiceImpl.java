@@ -9,8 +9,8 @@ import com.developer.quantscope.mapper.InterfaceInfoMapper;
 import com.developer.quantscope.model.network.ErrorCode;
 import com.developer.quantscope.service.UserInterfaceInfoService;
 import com.developer.quantscope.mapper.UserInterfaceInfoMapper;
-import com.developer.quantscopecommen.entity.InterfaceInfo;
-import com.developer.quantscopecommen.entity.UserInterfaceInfo;
+import com.developer.quantscopecommon.entity.InterfaceInfo;
+import com.developer.quantscopecommon.entity.UserInterfaceInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
